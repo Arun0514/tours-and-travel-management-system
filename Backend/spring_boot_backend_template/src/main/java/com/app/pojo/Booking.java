@@ -1,6 +1,8 @@
 package com.app.pojo;
 
 import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,8 +23,8 @@ public class Booking {
 	private String fromSource;
 	private String toDestination;
 	private int userId;
-	private String departureDate;
-	private String departureTime;
+	private LocalDate departureDate;
+	private LocalTime departureTime;
 	private boolean tripStatus;
 	private String fileName;
 	
@@ -46,11 +48,11 @@ public class Booking {
 		this.noOfPersons = noOfPersons;
 	}
 
-	public String getDepartureDate() {
+	public LocalDate getDepartureDate() {
 		return departureDate;
 	}
 
-	public void setDepartureDate(String departureDate) {
+	public void setDepartureDate(LocalDate departureDate) {
 		this.departureDate = departureDate;
 	}
 
@@ -94,11 +96,11 @@ public class Booking {
 		this.userId = userId;
 	}
 
-	public String getDepartureTime() {
+	public LocalTime getDepartureTime() {
 		return departureTime;
 	}
 
-	public void setDepartureTime(String departureTime) {
+	public void setDepartureTime(LocalTime departureTime) {
 		this.departureTime = departureTime;
 	}
 
