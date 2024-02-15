@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.app.pojo.TourPackage;
 import com.app.service.TourPackageService;
 
+
 @RestController
 @RequestMapping("/admin")
 public class TourPackageController {
@@ -40,7 +41,7 @@ public class TourPackageController {
 	public ResponseEntity<Object> showTourPackages() {
 		try {
 			List<TourPackage> packages = tourPackageService.getTourPackages();
-			return ResponseEntity.status(HttpStatus.OK).body("TourPackages" + packages);
+			return ResponseEntity.status(HttpStatus.OK).body(packages);
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("could not found resource");
 		}

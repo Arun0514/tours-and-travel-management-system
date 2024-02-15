@@ -59,7 +59,7 @@ public class DashboardController {
 			TourPackage pkg = tourPackageService.getPerticularTourPackage(id);
 			if (pkg == null)
 				throw new Exception();
-			return ResponseEntity.status(HttpStatus.OK).body("TourPackages" + pkg);
+			return ResponseEntity.status(HttpStatus.OK).body(pkg);
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No buses available");
 		}
@@ -87,7 +87,7 @@ public class DashboardController {
 			List<Booking> myBookings = bookService.getMyBookings(userId);
 			if (myBookings == null)
 				throw new Exception();
-			return ResponseEntity.status(HttpStatus.OK).body("Bookings :" + myBookings);
+			return ResponseEntity.status(HttpStatus.OK).body(myBookings);
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.OK).body("No bookings found");
 		}
