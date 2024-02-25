@@ -15,7 +15,7 @@ public class BookingServiceImpl implements BookingService {
 	private BookingDAO bookingDAO;
 	
 	@Override
-	public Booking BookPackage(int id, Booking booking,int userId) {
+	public Booking BookPackage(Booking booking,int userId) {
 		booking.setUserId(userId);
 		return bookingDAO.save(booking);
 	}

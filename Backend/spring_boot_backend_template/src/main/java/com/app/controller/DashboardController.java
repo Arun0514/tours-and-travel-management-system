@@ -3,11 +3,12 @@ package com.app.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +24,7 @@ import com.app.service.BookingService;
 import com.app.service.TourPackageService;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/dashboard")
 public class DashboardController {
 
@@ -43,9 +45,21 @@ public class DashboardController {
 			session.setAttribute("pkgs", packages);
 			if (packages.isEmpty())
 				throw new Exception("jhj");
-			return ResponseEntity.status(HttpStatus.OK).body("TourPackages" + packages);
+			return ResponseEntity.status(HttpStatus.OK).body(packages);
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No buses available");
+		}
+
+	}
+	
+	@GetMapping("/records")
+	public ResponseEntity<Object> showTourPackages(@RequestParam String from, @RequestParam String to,
+			@RequestParam String date) {
+		try {
+			List<TourPackage> packages = tourPackageService.getFilteredTourPackages(from, to, date);
+			return ResponseEntity.status(HttpStatus.OK).body(packages);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("could not found resource");
 		}
 
 	}
@@ -66,13 +80,15 @@ public class DashboardController {
 
 	}
 
-	@PostMapping("/book/{pkgId}/payAndBook")
-	public ResponseEntity<Object> bookPackage(@PathVariable int pkgId, @RequestBody Booking booking,
+	@PostMapping("/book/payAndBook")
+	public ResponseEntity<Object> bookPackage(@RequestBody Booking booking,
 			HttpSession session) {
 
 		try {
-			int userId = (int) session.getAttribute("userId");
-			Booking newBooking = bookService.BookPackage(pkgId, booking, userId);
+			System.out.println("in request controller");
+//			int userId = (int) session.getAttribute("userId");
+			//unable to set session while making request from frontend
+			Booking newBooking = bookService.BookPackage(booking, booking.getUserId());
 			return ResponseEntity.status(HttpStatus.CREATED).body("booked tickets successfully");
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("booking failed");
@@ -81,9 +97,9 @@ public class DashboardController {
 	}
 
 	@GetMapping("/myBookings")
-	public ResponseEntity<Object> showBookings(HttpSession session) {
+	public ResponseEntity<Object> showBookings(@RequestParam int userId) {
 		try {
-			int userId = (int) session.getAttribute("userId");
+			//int userId = (int) session.getAttribute("userId");
 			List<Booking> myBookings = bookService.getMyBookings(userId);
 			if (myBookings == null)
 				throw new Exception();
@@ -98,7 +114,7 @@ public class DashboardController {
 	public ResponseEntity<Object> cancelBooking(@PathVariable int id){
 		try {
 			bookService.cancelBooking(id);
-			return ResponseEntity.status(HttpStatus.OK).body("Booking caceled, refund initiated"); 
+			return ResponseEntity.status(HttpStatus.OK).body("Booking canceled, refund initiated"); 
 		}
 		catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Could not found resource.....");

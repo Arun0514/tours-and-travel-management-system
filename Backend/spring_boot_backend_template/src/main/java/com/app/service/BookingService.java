@@ -6,7 +6,7 @@ import com.app.pojo.Booking;
 
 public interface BookingService {
 
-	Booking BookPackage(int id, Booking booking,int userId);
+	Booking BookPackage(Booking booking,int userId);
 
 	List<Booking> getMyBookings(int userId);
 

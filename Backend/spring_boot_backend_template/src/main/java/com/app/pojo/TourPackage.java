@@ -18,7 +18,7 @@ public class TourPackage {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-    private LocalDate departureDate;
+    private String departureDate;
 	
 	private String fromSource;
 	
@@ -46,11 +46,11 @@ public class TourPackage {
 		this.id = id;
 	}
 
-	public LocalDate getDepartureDate() {
+	public String getDepartureDate() {
 		return departureDate;
 	}
 
-	public void setDepartureDate(LocalDate departureDate) {
+	public void setDepartureDate(String departureDate) {
 		this.departureDate = departureDate;
 	}
 
