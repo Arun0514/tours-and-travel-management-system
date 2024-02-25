@@ -22,6 +22,7 @@ public class Booking {
 	private Double totalAmount;
 	private String fromSource;
 	private String toDestination;
+	private String busName;
 	private int userId;
 	private LocalDate departureDate;
 	private LocalTime departureTime;
@@ -42,6 +43,14 @@ public class Booking {
 
 	public int getNoOfPersons() {
 		return noOfPersons;
+	}
+	
+	public String getBusName() {
+		return busName;
+	}
+
+	public void setBusName(String busName) {
+		this.busName = busName;
 	}
 
 	public void setNoOfPersons(int noOfPersons) {
